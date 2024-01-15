@@ -4,14 +4,14 @@ import csv
 
 # -----------------------------------------------------------------
 def read_json(file_name):
-    with open(file_name, 'r') as json_file:
+    with open(file_name, 'r', encoding="UTF-8") as json_file:
         data = json.load(json_file)
     return data
 
 
 # -----------------------------------------------------------------
 def write_csv(file_name, data):
-    with open(file_name, 'w', newline='') as csv_file:
+    with open(file_name, 'w', encoding="UTF-8",  newline='',) as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(data[0].keys())
         for item in data:
@@ -19,31 +19,31 @@ def write_csv(file_name, data):
 
 
 # -----------------------------------------------------------------
-def add_employee_json(file_name):
+def add_employee_json(file_name, name, birthday, height, weight, car, languages):
     data = read_json(file_name)
     new_employee = {
-        'name': input("Имя сотрудника: "),
-        'birthday': input("Возраст сотрудника: "),
-        'height': float(input("Рост сотрудника: ")),
-        'weight': float(input("Введите вес сотрудника: ")),
-        'car': input("Есть ли у сотрудника машина: "),
-        'languages': input("Язык программирования: ")
+        'name': name,
+        'birthday': birthday,
+        'height': height,
+        'weight': weight,
+        'car': car,
+        'languages': languages
     }
     data.append(new_employee)
-    with open(file_name, 'w') as json_file:
-        json.dump(data, json_file, indent=4)
+    with open(file_name, 'w', encoding="UTF-8") as json_file:
+        json.dump(data, json_file, ensure_ascii=False, indent=4)
 
 
 # -----------------------------------------------------------------
-def add_employee_csv(file_name):
+def add_employee_csv(file_name, name, birthday, height, weight, car, languages):
     data = read_json(file_name)
     new_employee = {
-        'name': input("Имя сотрудника: "),
-        'birthday': input("Возраст сотрудника: "),
-        'height': float(input("Рост сотрудника: ")),
-        'weight': float(input("Введите вес сотрудника: ")),
-        'car': input("Есть ли у сотрудника машина: "),
-        'languages': input("Язык программирования: ")
+        'name': name,
+        'birthday': birthday,
+        'height': height,
+        'weight': weight,
+        'car': car,
+        'languages': languages
     }
     data.append(new_employee)
     write_csv(file_name, data)
@@ -120,10 +120,82 @@ def menu():
                 write_csv('output.csv', data)
                 print("Данные успешно сохранены в CSV.")
             case 3:
-                add_employee_json(file_employee)
+                name = input("Имя сотрудника: ")
+                birthday = input("Дата рождения сотрудника (ДД.ММ.ГГГГ): ")
+                while True:
+                    parts = birthday.split(".")
+                    if len(parts) != 3 or not all(part.isdigit() for part in parts):
+                        print("Некорректный формат даты. Попробуйте еще раз.")
+                        birthday = input("Дата рождения сотрудника (день.месяц.год): ")
+                        continue
+
+                    day, month, year = map(int, parts)
+                    if day < 1 or day > 31 or month < 1 or month > 12 or year < 0:
+                        print("Некорректная дата. Попробуйте еще раз.")
+                        birthday = input("Дата рождения сотрудника (день.месяц.год): ")
+                        continue
+                    break
+
+                height = float(input("Рост сотрудника: "))
+                while height <= 0:
+                    print("Некорректный ввод роста. Попробуйте еще раз.")
+                    height = float(input("Рост сотрудника: "))
+
+                weight = float(input("Вес сотрудника: "))
+                while weight <= 0:
+                    print("Некорректный ввод веса. Попробуйте еще раз.")
+                    weight = float(input("Вес сотрудника: "))
+
+                car_input = input("Есть ли у сотрудника машина (True/False): ")
+                while car_input.lower() not in ['true', 'false']:
+                    print("Некорректный ввод. Попробуйте еще раз.")
+                    car_input = input("Есть ли у сотрудника машина (True/False): ")
+
+                car = bool(car_input)
+
+                languages_input = input("Язык программирования (через запятую): ")
+                languages = [lang.strip() for lang in languages_input.split(",")]
+
+                add_employee_json(file_employee, name, birthday, height, weight, car, languages)
                 print("Новый сотрудник успешно добавлен в JSON.")
             case 4:
-                add_employee_csv(file_employee)
+                name = input("Имя сотрудника: ")
+                birthday = input("Дата рождения сотрудника (ДД.ММ.ГГГГ): ")
+                while True:
+                    parts = birthday.split(".")
+                    if len(parts) != 3 or not all(part.isdigit() for part in parts):
+                        print("Некорректный формат даты. Попробуйте еще раз.")
+                        birthday = input("Дата рождения сотрудника (день.месяц.год): ")
+                        continue
+
+                    day, month, year = map(int, parts)
+                    if day < 1 or day > 31 or month < 1 or month > 12 or year < 0:
+                        print("Некорректная дата. Попробуйте еще раз.")
+                        birthday = input("Дата рождения сотрудника (день.месяц.год): ")
+                        continue
+                    break
+
+                height = float(input("Рост сотрудника: "))
+                while height <= 0:
+                    print("Некорректный ввод роста. Попробуйте еще раз.")
+                    height = float(input("Рост сотрудника: "))
+
+                weight = float(input("Вес сотрудника: "))
+                while weight <= 0:
+                    print("Некорректный ввод веса. Попробуйте еще раз.")
+                    weight = float(input("Вес сотрудника: "))
+
+                car_input = input("Есть ли у сотрудника машина (True/False): ")
+                while car_input.lower() not in ['true', 'false']:
+                    print("Некорректный ввод. Попробуйте еще раз.")
+                    car_input = input("Есть ли у сотрудника машина (True/False): ")
+
+                car = bool(car_input)
+
+                languages_input = input("Язык программирования (через запятую): ")
+                languages = [lang.strip() for lang in languages_input.split(",")]
+
+                add_employee_csv(file_employee, name, birthday, height, weight, car, languages)
                 print("Новый сотрудник успешно добавлен в CSV.")
             case 5:
                 input_name = input("Введите имя сотрудника: ")
