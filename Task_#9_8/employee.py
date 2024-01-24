@@ -136,15 +136,23 @@ def menu():
                         continue
                     break
 
-                height = float(input("Рост сотрудника: "))
-                while height <= 0:
-                    print("Некорректный ввод роста. Попробуйте еще раз.")
-                    height = float(input("Рост сотрудника: "))
+                state = True
+                while state:
+                    height = input("Рост сотрудника: ")
+                    if height.isdigit() and int(height) > 0:
+                        height = int(height)
+                        state = False
+                    else:
+                        print("Некорректный ввод роста. Попробуйте еще раз.")
 
-                weight = float(input("Вес сотрудника: "))
-                while weight <= 0:
-                    print("Некорректный ввод веса. Попробуйте еще раз.")
-                    weight = float(input("Вес сотрудника: "))
+                state = True
+                while state:
+                    weight = input("Вес сотрудника: ")
+                    if weight.isdigit() and int(weight) > 0:
+                        weight = int(weight)
+                        state = False
+                    else:
+                        print("Некорректный ввод веса. Попробуйте еще раз.")
 
                 car_input = input("Есть ли у сотрудника машина (True/False): ")
                 while car_input.lower() not in ['true', 'false']:
@@ -175,15 +183,23 @@ def menu():
                         continue
                     break
 
-                height = float(input("Рост сотрудника: "))
-                while height <= 0:
-                    print("Некорректный ввод роста. Попробуйте еще раз.")
-                    height = float(input("Рост сотрудника: "))
+                state = True
+                while state:
+                    height = input("Рост сотрудника: ")
+                    if height.isdigit() and int(height) > 0:
+                        height = int(height)
+                        state = False
+                    else:
+                        print("Некорректный ввод роста. Попробуйте еще раз.")
 
-                weight = float(input("Вес сотрудника: "))
-                while weight <= 0:
-                    print("Некорректный ввод веса. Попробуйте еще раз.")
-                    weight = float(input("Вес сотрудника: "))
+                state = True
+                while state:
+                    weight = input("Вес сотрудника: ")
+                    if weight.isdigit() and int(weight) > 0:
+                        weight = int(weight)
+                        state = False
+                    else:
+                        print("Некорректный ввод веса. Попробуйте еще раз.")
 
                 car_input = input("Есть ли у сотрудника машина (True/False): ")
                 while car_input.lower() not in ['true', 'false']:
